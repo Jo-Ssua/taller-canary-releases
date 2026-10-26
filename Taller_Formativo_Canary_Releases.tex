@@ -1,0 +1,290 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\geometry{margin=0.68in, top=0.85in, bottom=0.78in, headheight=36pt, headsep=14pt}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{lastpage}
+\usepackage{setspace}
+\usepackage{listings}
+
+% Tipografía institucional Icesi (Sans-Serif Helvetica)
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Interlineado aumentado un 30% (setstretch 1.38)
+\setstretch{1.38}
+
+% Altura de celdas en tablas
+\renewcommand{\arraystretch}{1.25}
+
+% Paleta de Colores Oficial de los Programas Icesi
+\definecolor{icesiBlue}{HTML}{5454E9}       % Azul vibrante institucional
+\definecolor{icesiOrange}{HTML}{F0681A}     % Naranja acento
+\definecolor{icesiGreen}{HTML}{4CB978}      % Verde acento
+\definecolor{icesiPurple}{HTML}{865CF0}     % Púrpura acento
+\definecolor{icesiDark}{HTML}{1A1A1A}       % Texto principal oscuro
+\definecolor{icesiMuted}{HTML}{6B7280}      % Gris metadatos
+\definecolor{icesiBorder}{HTML}{D1D5DB}     % Líneas y bordes
+\definecolor{icesiRowLine}{HTML}{E5E7EB}    % Líneas de tabla
+\definecolor{icesiLight}{HTML}{F9FAFB}      % Fondo suave
+\definecolor{codeBackground}{HTML}{F3F4F6}  % Fondo código
+
+% Configuración de Listings
+\lstdefinestyle{bashstyle}{
+    backgroundcolor=\color{codeBackground},
+    commentstyle=\color{icesiMuted}\itshape,
+    keywordstyle=\color{icesiBlue}\bfseries,
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{icesiBorder},
+    language=bash,
+    aboveskip=2pt,
+    belowskip=2pt
+}
+
+\lstdefinestyle{codeStyle}{
+    backgroundcolor=\color{codeBackground},
+    commentstyle=\color{icesiMuted}\itshape,
+    keywordstyle=\color{icesiBlue}\bfseries,
+    stringstyle=\color{icesiOrange},
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{icesiBorder},
+    aboveskip=2pt,
+    belowskip=2pt
+}
+
+% =========================================================================
+% ENCABEZADO Y PIE DE PÁGINA ESTILO PROGRAMA DE CURSO ICESI
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{%
+  \begin{minipage}[c]{2.8cm}
+    \includegraphics[height=0.58cm]{logo-icesi.png}
+  \end{minipage}%
+  \hspace{0.15cm}%
+  {\color{icesiBorder}\vrule width 0.8pt height 0.60cm}%
+  \hspace{0.2cm}%
+  \begin{minipage}[c]{10.5cm}
+    \fontsize{7.5}{9.5}\selectfont\textbf{\color{icesiDark}UNIVERSIDAD ICESI} \\
+    \fontsize{7}{9}\selectfont\textbf{\color{icesiDark}PROGRAMA DE CURSO / GUÍA PRÁCTICA FORMATIVA: INGENIERÍA DE SOFTWARE V} \\
+    \fontsize{6.5}{8.5}\selectfont\color{icesiMuted}Período: 202620 $\bullet$ NRC: 11005 $\bullet$ Semana 11 $\bullet$ Sesión 22 $\bullet$ Duración: 2 Horas
+  \end{minipage}%
+}
+\fancyhead[R]{\fontsize{7.5}{9.5}\selectfont\color{icesiMuted}Pág. \thepage\ de \pageref{LastPage}}
+
+% Barra horizontal multicolor
+\renewcommand{\headrule}{%
+  \vspace{0.08cm}%
+  \noindent%
+  \textcolor{icesiBlue}{\rule{0.60\textwidth}{1.8pt}}%
+  \textcolor{icesiOrange}{\rule{0.18\textwidth}{1.8pt}}%
+  \textcolor{icesiGreen}{\rule{0.11\textwidth}{1.8pt}}%
+  \textcolor{icesiPurple}{\rule{0.11\textwidth}{1.8pt}}%
+}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\fontsize{7.5}{9.5}\selectfont\color{icesiMuted}Ingeniería de Software V (09776 - TIC) $\bullet$ Taller Formativo: Canary Releases}
+\fancyfoot[R]{\fontsize{7.5}{9.5}\selectfont\color{icesiMuted}Universidad Icesi $\bullet$ DCSI}
+
+% =========================================================================
+% COMANDOS DE SECCIONES CON BADGE ESTILO PROGRAMA ICESI
+% =========================================================================
+\newcommand{\sectionBadge}[1]{%
+  \refstepcounter{section}%
+  \vspace{0.16cm}%
+  \noindent%
+  \colorbox{icesiBlue}{\color{white}\rule[-0.08cm]{0pt}{0.42cm}\hspace{0.16cm}\textbf{\normalsize \thesection}\hspace{0.16cm}}%
+  \hspace{0.18cm}%
+  {\fontsize{9.5}{12}\selectfont\textbf{\color{icesiDark}#1}}\\[-0.10cm]%
+  \noindent{\color{icesiDark}\rule{\textwidth}{0.8pt}}\vspace{0.06cm}%
+}
+
+\titleformat{\subsection}
+  {\color{icesiBlue}\normalfont\normalsize\bfseries}
+  {\thesubsection}{0.4em}{}
+\titlespacing*{\subsection}{0pt}{0.4ex plus 0.2ex minus .1ex}{0.2ex plus .1ex}
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\begin{document}
+
+% =========================================================================
+% TÍTULO Y PRESENTACIÓN INICIAL (PÁGINA 1)
+% =========================================================================
+\noindent
+{\fontsize{8.5}{11}\selectfont\textbf{\color{icesiBlue}GUÍA PRÁCTICA FORMATIVA: ESTRATEGIA DE DESPLIEGUE CANARY RELEASES}}\\[0.06cm]
+{\fontsize{15}{18}\selectfont\textbf{Ingeniería de Software V --- Sesión 22 (Semana 11)}}\\[0.10cm]
+{\fontsize{8.5}{11}\selectfont\color{icesiMuted}\textbf{Enrutamiento Porcentual Ponderado con Nginx, Telemetría, Mitigación de Blast Radius y Rollback}}\\[0.04cm]
+{\color{icesiRowLine}\hrule height 0.6pt}\vspace{0.10cm}
+
+\noindent
+{\color{icesiBlue}\textbf{\rule{2.5pt}{8.5pt}}}~\textbf{\fontsize{8.5}{11}\selectfont FACULTAD DE INGENIERÍA, DISEÑO Y CIENCIAS APLICADAS} \hfill
+{\color{icesiOrange}\textbf{\rule{2.5pt}{8.5pt}}}~\textbf{\fontsize{8.5}{11}\selectfont DEPARTAMENTO DE COMPUTACIÓN Y SISTEMAS INTELIGENTES}\\[0.06cm]
+{\color{icesiRowLine}\hrule height 0.6pt}\vspace{0.10cm}
+
+% =========================================================================
+% TABLA DE METADATOS FORMATIVOS
+% =========================================================================
+\noindent
+{\color{icesiBlue}\textbf{\rule{2.5pt}{8.5pt}}}~\textbf{\fontsize{8.5}{11}\selectfont INFORMACIÓN DE LA ACTIVIDAD} \hfill {\fontsize{7.5}{9}\selectfont\color{icesiMuted}\textbf{IDENTIFICACIÓN}}\\[-0.22cm]
+{\color{icesiBorder}\hrule height 0.5pt}\vspace{0.05cm}
+
+\noindent
+\small
+\begin{tabularx}{\textwidth}{>{\bfseries\color{icesiDark}\fontsize{7.5}{9.5}\selectfont}L{2.5cm}X!{\color{icesiBlue}\vrule width 0.8pt}>{\bfseries\color{icesiDark}\fontsize{7.5}{9.5}\selectfont}L{2.5cm}X}
+CÓDIGO: & 09776 - TIC & PERÍODO: & 202620 (Semestre 2026-2) \\ \hline
+\rowcolor{icesiLight}
+NRC / GRUPO: & 11005 / Grupo 001 & PONDERACIÓN: & \textbf{Formativa} (Sin calificación sumativa) $\bullet$ Duración: 2 Horas \\ \hline
+POLÍTICA IAG: & Nivel 3: Colaboración Asistida & MODALIDAD: & Parejas / Laboratorio Práctico Guiado \\ \hline
+\rowcolor{icesiLight}
+ESTUDIANTE 1: & \rule{4.5cm}{0.4pt} & CÓDIGO: & \rule{2.2cm}{0.4pt} \\ \hline
+ESTUDIANTE 2: & \rule{4.5cm}{0.4pt} & CÓDIGO: & \rule{2.2cm}{0.4pt} \\ \hline
+\end{tabularx}
+
+\vspace{0.10cm}
+
+% =========================================================================
+% SECCIÓN 1: CONTEXTO Y ARQUITECTURA CANARY
+% =========================================================================
+\sectionBadge{Contexto del Problema \& Arquitectura Canary}
+
+\subsection{Descripción del Reto de Despliegue}
+Mientras que la estrategia Blue-Green conmuta el 100\% de los usuarios de un solo golpe, ciertas fallas críticas (ej. fugas de memoria progresivas, degradación de latencia bajo carga real o incompatibilidades con casos borde de clientes) solo se manifiestan tras varios minutos de tráfico continuo. Si se conmuta al 100\%, la totalidad de los usuarios sufren el impacto del incidente.
+
+La estrategia \textbf{Canary Release} minimiza drásticamente el radio de impacto (\textit{Blast Radius}) mediante una introducción gradual del nuevo código:
+\begin{itemize}[itemsep=1pt]
+  \item \textbf{Enrutamiento Porcentual Inicial:} La versión estable (\texttt{v1.0.0}) retiene el 90\% del tráfico, mientras que la versión candidata (\texttt{v2.0.0 / Canary}) solo recibe el 10\%.
+  \item \textbf{Criterios Deterministas de Ruteo:} Nginx aplica el módulo \texttt{split\_clients} mediante una función hash sobre la dirección IP o la cabecera HTTP del cliente, garantizando que una sesión continúe en la misma versión.
+  \item \textbf{Monitoreo de Telemetría y SLOs:} Si la versión Canary reporta una tasa de errores HTTP 5xx o latencias elevadas, se corta el tráfico inmediatamente sin afectar al 90\% restante.
+  \item \textbf{Promoción Progresiva:} Si los indicadores de telemetría son óptimos, el tráfico se incrementa gradualmente ($10\% \rightarrow 50\% \rightarrow 100\%$) hasta retirar la versión anterior.
+\end{itemize}
+
+\vspace{0.08cm}
+\noindent
+\small
+\begin{tabularx}{\textwidth}{|L{2.8cm}|X|L{3.5cm}|}
+\hline
+\rowcolor{icesiLight}
+\textbf{Componente} & \textbf{Tecnología \& Contenedor} & \textbf{Puerto / Endpoint} \\ \hline
+\textbf{Canary Gateway} & Nginx 1.25 Alpine (\texttt{split\_clients}) & Puerto \texttt{8080} (\texttt{http://localhost:8080}) \\ \hline
+\textbf{Versión Stable} & Microservicio v1.0.0 (\texttt{app-stable}) & Puerto interno \texttt{8081} (90\% Tráfico) \\ \hline
+\textbf{Versión Canary} & Microservicio v2.0.0 (\texttt{app-canary}) & Puerto interno \texttt{8082} (10\% Tráfico inicial) \\ \hline
+\textbf{Inyección de Fallos} & Endpoint simulador (\texttt{/api/fault}) & Disparador de errores HTTP 500 \\ \hline
+\end{tabularx}
+
+\newpage
+
+% =========================================================================
+% PÁGINA 2: PROCEDIMIENTO EXPERIMENTAL PASO A PASO
+% =========================================================================
+\sectionBadge{Procedimiento Experimental Paso a Paso}
+
+\subsection{Fase 1: Puesta en Marcha del Stack Canary (15 min)}
+Ubíquese en \texttt{codigo\_base/} e inicie los tres contenedores configurados en \texttt{docker-compose.yml}:
+\begin{lstlisting}[style=bashstyle]
+docker compose up -d --build
+docker compose ps
+\end{lstlisting}
+
+\subsection{Fase 2: Configuración del Enrutamiento Porcentual en Nginx (20 min)}
+Inspeccione el archivo \texttt{nginx/nginx.conf}. Note cómo la directiva \texttt{split\_clients} distribuye el tráfico:
+\begin{lstlisting}[style=codeStyle]
+events { worker_connections 1024; }
+
+http {
+    # Mapeo determinista por IP de cliente
+    split_clients "${remote_addr}AAA" $backend_upstream {
+        10%     app-canary:8080;   # 10% del trafico
+        *       app-stable:8080;   # 90% restante
+    }
+
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://$backend_upstream;
+            proxy_set_header Host $host;
+            add_header X-Served-By $backend_upstream always;
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Fase 3: Verificación Estadística de la Distribución de Tráfico (25 min)}
+Ejecute el script de prueba sintética \texttt{./test\_traffic.sh}, el cual envía 100 peticiones simulando diferentes clientes y tabula los resultados:
+\begin{lstlisting}[style=bashstyle]
+./test_traffic.sh 100
+\end{lstlisting}
+Observe la salida estadística consolidada:
+\begin{itemize}[itemsep=1pt]
+  \item \textbf{Stable (v1.0.0):} $\sim 90\%$ de las respuestas con cabecera \texttt{X-Served-By: app-stable:8080}.
+  \item \textbf{Canary (v2.0.0):} $\sim 10\%$ de las respuestas con cabecera \texttt{X-Served-By: app-canary:8080}.
+\end{itemize}
+
+\subsection{Fase 4: Simulación de Degradación y Alerta de Telemetría (25 min)}
+Simule la introducción de un bug crítico en la versión Canary activando la inyección de fallos:
+\begin{lstlisting}[style=bashstyle]
+# Provocar que el contenedor Canary responda HTTP 500 ante peticiones:
+curl -X POST http://localhost:8082/api/fault/enable
+\end{lstlisting}
+
+Ejecute nuevamente el monitor de tráfico:
+\begin{lstlisting}[style=bashstyle]
+./test_traffic.sh 50
+\end{lstlisting}
+Verifique que los errores HTTP 500 solo afectan al $\sim 10\%$ de las peticiones, mientras que el $90\%$ de los clientes continúan operando con normalidad sobre Stable.
+
+\subsection{Fase 5: Rollback y Evacuación Inmediata de Tráfico (15 min)}
+Ante la alarma de fallos en producción, evacúe el tráfico de Canary inmediatamente ejecutando:
+\begin{lstlisting}[style=bashstyle]
+./rollback.sh
+\end{lstlisting}
+El script ajusta la ponderación en Nginx a 0\% para Canary y recarga en caliente (\texttt{nginx -s reload}). Vuelva a enviar peticiones y compruebe que el 100\% del tráfico regresa a Stable con 0 errores.
+
+\subsection{Fase 6: Promoción Exitosa a Producción (Opcional - 20 min)}
+Restaure el estado saludable del Canary (\texttt{curl -X POST http://localhost:8082/api/fault/disable}) y ejecute el script de promoción progresiva:
+\begin{lstlisting}[style=bashstyle]
+./promote_canary.sh 50   # Incrementar a 50%
+./promote_canary.sh 100  # Promocionar al 100% (Canary se convierte en la nueva Stable)
+\end{lstlisting}
+
+% =========================================================================
+% PÁGINA 3: CUESTIONARIO Y CHECKLIST FORMATIVO
+% =========================================================================
+\sectionBadge{Cuestionario de Reflexión Conceptual \& Checklist Formativo}
+
+\subsection{Preguntas de Reflexión Técnica}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+  \item \textbf{Blast Radius (Radio de Impacto):} Compare el impacto que tiene un error grave (ej. fallo en procesamiento de tarjetas) desplegado con Blue-Green (100\% de usuarios) frente a un Canary del 5\%. ¿Cómo protege esto la métrica MTTR (Mean Time to Recover)?
+  \item \textbf{Criterios de Telemetría Automatizada:} ¿Por qué las organizaciones avanzadas (ej. Spinnaker / Argo Rollouts) automatizan el rollback mediante análisis estadístico de Prometheus en lugar de esperar la revisión manual de un ingeniero?
+  \item \textbf{Afinidad de Sesión en Canary:} Si un usuario agrega un artículo al carrito en la versión Canary y en la siguiente petición cae en Stable, ¿qué problemas de experiencia surgen si no existe persistencia compartida?
+\end{enumerate}
+
+\subsection{Checklist de Logro Formativo (Autoevaluación)}
+\small
+\begin{tabularx}{\textwidth}{|L{4.2cm}|X|C{2.5cm}|}
+\hline
+\rowcolor{icesiLight}
+\textbf{Objetivo Formativo} & \textbf{Evidencia Observable} & \textbf{Estado} \\ \hline
+\textbf{1. Enrutamiento Ponderado} & Nginx distribuye 90\% a Stable y 10\% a Canary de forma determinista. & [ ] Logrado \\ \hline
+\textbf{2. Medición Estadística} & Script de tráfico confirma distribución porcentual de respuestas. & [ ] Logrado \\ \hline
+\textbf{3. Mitigación de Blast Radius} & Fallo inyectado en Canary solo afecta la cuota asignada (10\%). & [ ] Logrado \\ \hline
+\textbf{4. Evacuación / Rollback} & Tráfico conmutado a 100\% Stable con \texttt{nginx -s reload} sin caídas. & [ ] Logrado \\ \hline
+\textbf{5. Promoción Progresiva} & Incremento de tráfico a 50\% y 100\% verificado con telemetría. & [ ] Logrado \\ \hline
+\end{tabularx}
+
+\end{document}
